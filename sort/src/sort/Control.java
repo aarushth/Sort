@@ -9,7 +9,8 @@ public class Control implements Frame.EventListener, Sorter.EventListener{
 	private Frame frame;
 	private Draw drawer;
 	private Sorter sort;
-	//private int length;
+	private boolean nonRec = true;
+	private boolean hasChanged = false;
 	private boolean firstDraw = true;
 	public Control() {
 		//length = size;
@@ -31,13 +32,18 @@ public class Control implements Frame.EventListener, Sorter.EventListener{
 			drawer.init(g, list.getArray());
 			firstDraw = false;
 		}
+		if(hasChanged) {
+			drawer.drawStrings(g, nonRec);
+			hasChanged = false;
+		}
 		drawer.drawFrame(g, list.getArray());
 	}
 
 	@Override
 	public void onEnterEvent() {
-		
-		//sort.randomize(list, frame);
+		nonRec = !nonRec;
+		hasChanged = true;
+		frame.updateFrame();
 	}
 
 
@@ -55,50 +61,59 @@ public class Control implements Frame.EventListener, Sorter.EventListener{
 	public void onNumEvent(int i) {
 		Thread thread = new Thread(){
 			public void run(){
-				switch(i) {
-					case 1:
-						list = new List(50);
-						drawer.changeSize(list.getArray());
-						sort.randomize(list, frame);
-						sort.bubbleSort(list, frame);
-						frame.updateFrame();	
-						break;
-					case 2:
-						list = new List(200);
-						drawer.changeSize(list.getArray());
-						sort.randomize(list, frame);
-						sort.insertionSort(list, frame);
-						frame.updateFrame();
-						break;
-					case 3:
-						list = new List(500);
-						drawer.changeSize(list.getArray());
-						sort.randomize(list, frame);
-						sort.radixLSD(list, frame);
-						frame.updateFrame();
-						break;
-					case 4:
-						list = new List(500);
-						drawer.changeSize(list.getArray());
-						sort.randomize(list, frame);
-						sort.radixMSD(list, frame);
-						frame.updateFrame();
-						break;
-					case 5:
-						list = new List(100);
-						drawer.changeSize(list.getArray());
-						sort.randomize(list, frame);
-						sort.cocktailShaker(list, frame);
-						frame.updateFrame();
-						break;
-					case 6:
-						list = new List(500);
-						drawer.changeSize(list.getArray());
-						sort.randomize(list, frame);
-						sort.mergeSort(list, frame);
-						frame.updateFrame();
-						break;
-				}	
+				if(nonRec) {
+					switch(i) {
+						case 1:
+							list = new List(50);
+							drawer.changeSize(list.getArray());
+							sort.randomize(list, frame);
+							sort.bubbleSort(list, frame);
+							frame.updateFrame();	
+							break;
+						case 2:
+							list = new List(100);
+							drawer.changeSize(list.getArray());
+							sort.randomize(list, frame);
+							sort.cocktailShaker(list, frame);
+							frame.updateFrame();
+							break;
+						case 3:
+							list = new List(200);
+							drawer.changeSize(list.getArray());
+							sort.randomize(list, frame);
+							sort.insertionSort(list, frame);
+							frame.updateFrame();
+							break;
+						case 4:
+							list = new List(500);
+							drawer.changeSize(list.getArray());
+							sort.randomize(list, frame);
+							sort.radixLSD(list, frame);
+							frame.updateFrame();
+							break;
+						case 5:
+							
+						case 6:
+							
+					}
+				}else {
+					switch(i) {
+						case 1:
+							list = new List(500);
+							drawer.changeSize(list.getArray());
+							sort.randomize(list, frame);
+							sort.radixMSD(list, frame);
+							frame.updateFrame();
+							break;
+						case 2:
+							list = new List(500);
+							drawer.changeSize(list.getArray());
+							sort.randomize(list, frame);
+							sort.mergeSort(list, frame);
+							frame.updateFrame();
+							break;
+					}
+				}
 				
 			}
 		};
