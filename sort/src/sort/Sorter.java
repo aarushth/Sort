@@ -16,7 +16,7 @@ public class Sorter {
 	}
 	private void wait(int time) {
 		this.listener.update();
-		start = System.currentTimeMillis();
+		long start = System.currentTimeMillis();
 		while(start + time >= System.currentTimeMillis());
 	}
 	
@@ -208,5 +208,24 @@ public class Sorter {
 			}
 		}
 		return;
+	}
+
+	public void quickSort(List l, Frame f) {
+		internalQuickSort(l, f, 0, l.size-1);
+	}
+	private void internalQuickSort(List l, Frame f, int start, int end) {
+		if(start >= end) {
+			return;
+		}
+		int i = start;
+		for(int j = start; j <= end; j++) {
+			if(l.getArray()[j] < l.getArray()[end]) {
+				swap(l, i, j, f);
+				i++;
+			}
+		}
+		swap(l, i, end, f);
+		internalQuickSort(l, f, start, i-1);
+		internalQuickSort(l, f, i, end);
 	}
 }

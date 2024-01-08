@@ -42,7 +42,7 @@ public class Draw {
 		g.drawString("Recursive Sorts", pageWidth, fontDif*12);
 		g.drawString("1: Radix MSD Sort", pageWidth, fontDif*13);
 		g.drawString("2: Merge Sort", pageWidth, fontDif*14);
-		g.drawString("3: ", pageWidth, fontDif*15);
+		g.drawString("3: Quick Sort", pageWidth, fontDif*15);
 		g.drawString("4: ", pageWidth, fontDif*16);
 		g.drawString("5: ", pageWidth, fontDif*17);
 		g.drawString("6: ", pageWidth, fontDif*18);

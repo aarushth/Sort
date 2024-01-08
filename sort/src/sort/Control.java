@@ -91,10 +91,6 @@ public class Control implements Frame.EventListener, Sorter.EventListener{
 							sort.radixLSD(list, frame);
 							frame.updateFrame();
 							break;
-						case 5:
-							
-						case 6:
-							
 					}
 				}else {
 					switch(i) {
@@ -110,6 +106,13 @@ public class Control implements Frame.EventListener, Sorter.EventListener{
 							drawer.changeSize(list.getArray());
 							sort.randomize(list, frame);
 							sort.mergeSort(list, frame);
+							frame.updateFrame();
+							break;
+						case 3:
+							list = new List(500);
+							drawer.changeSize(list.getArray());
+							sort.randomize(list, frame);
+							sort.quickSort(list, frame);
 							frame.updateFrame();
 							break;
 					}
