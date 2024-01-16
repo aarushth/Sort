@@ -37,6 +37,7 @@ public class Sorter {
 		for(int j = l.size; j > 0;j--) {
 			for(int i = 0; i < j-1; i++) {
 				if(l.getArray()[i] > l.getArray()[i+1]) {
+					l.compare();
 					this.swap(l, i, i+1, f);
 				}
 			}
@@ -46,6 +47,7 @@ public class Sorter {
 		for(int j = 1; j < l.size;j++) {
 			for(int i = 0; i < j; i++) {
 				if(l.getArray()[j] < l.getArray()[i]) {
+					l.compare();
 					int temp = l.getArray()[j];
 					shift(l, i, j-1, 1);
 					l.getArray()[i] = temp;
@@ -58,6 +60,7 @@ public class Sorter {
 		int max = 0;
 		for(int i = 0; i < l.size; i++) {
 			if(l.getArray()[i] > max) {
+				l.compare();
 				max = l.getArray()[i];
 			}
 		}
@@ -66,6 +69,7 @@ public class Sorter {
 			int divide = (int) Math.pow(10,  i-1);
 			int maxDig = 0;
 			for(int j = 0; j < l.size;j++) {
+				l.compare();
 				if((l.getArray()[j]%mod)/divide > maxDig) {
 					maxDig = (l.getArray()[j]%mod)/divide;
 				}
@@ -73,16 +77,20 @@ public class Sorter {
 			int[] countArr = new int[maxDig+1];
 			for(int j = 0; j < l.size;j++) {
 				int st = (l.getArray()[j]%mod)/divide;
+				l.writeToAux();
 				countArr[st]++;
 			}
 			for(int j = 1; j < countArr.length; j++) {
 				countArr[j] += countArr[j-1];
+				l.writeToAux();
 			}
 			int[] outputArr = new int[l.size];
 			for(int j = l.size-1; j >=0; j--) {
 				int outInd = countArr[(l.getArray()[j]%mod)/divide];
 				outputArr[outInd - 1] = l.getArray()[j];
+				l.writeToAux();
 				countArr[(l.getArray()[j]%mod)/divide]--;
+				l.writeToAux();
 			}
 			l.set(outputArr);
 			wait(1000);
@@ -98,6 +106,7 @@ public class Sorter {
 		int maxDig = 0;
 		for(int j = start; j <= end;j++) {
 			if((l.getArray()[j]%mod)/divide > maxDig) {
+				l.compare();
 				maxDig = (l.getArray()[j]%mod)/divide;
 			}
 		}
@@ -105,24 +114,33 @@ public class Sorter {
 		for(int j = start; j <= end;j++) {
 			int st = (l.getArray()[j]%mod)/divide;
 			countArr[st]++;
+			l.writeToAux();
 		}
 		ArrayList<Integer> divisions =  new ArrayList<Integer>();
 		divisions.add(start);
+		l.writeToAux();
 		divisions.add(countArr[0]+start);
+		l.writeToAux();
 		for(int j = 1; j < countArr.length; j++) {
 			countArr[j] += countArr[j-1];
+			l.writeToAux();
 			divisions.add(countArr[j]+start);
+			l.writeToAux();
 		}
 		int[] outputArr = new int[l.size];
 		
 		for(int j = end; j >=start; j--) {
 			int outInd = countArr[(l.getArray()[j]%mod)/divide];
 			outputArr[outInd - 1 + start] = l.getArray()[j];
+			l.writeToAux();
 			countArr[(l.getArray()[j]%mod)/divide]--;
+			l.writeToAux();
 		}
 		for(int j = start; j < outputArr.length; j++) {
+			l.compare();
 			if(outputArr[j] != 0) {
 				l.getArray()[j] = outputArr[j];
+				l.writeToAux();
 				wait(0);
 			}
 		}
@@ -136,6 +154,7 @@ public class Sorter {
 	public void radixMSD(List l, Frame f) {
 		int max = 0;
 		for(int i = 0; i < l.size; i++) {
+			l.compare();
 			if(l.getArray()[i] > max) {
 				max = l.getArray()[i];
 			}
@@ -149,6 +168,7 @@ public class Sorter {
 		int high = l.size-1;
 		while(low < high) {
 			for(int i = low; i < high; i++) {
+				l.compare();
 				if(l.getArray()[i] > l.getArray()[i+1]) {
 					l.swap(i, i+1);
 					wait(0);
@@ -156,6 +176,7 @@ public class Sorter {
 			}
 			high--;
 			for(int i = high; i > low; i--) {
+				l.compare();
 				if(l.getArray()[i] < l.getArray()[i-1]) {
 					l.swap(i, i-1);
 					wait(0);
@@ -180,28 +201,34 @@ public class Sorter {
 		int j = mid+1;
 		int k = start;
 		for(; i <= mid && j <= end && k <= end; k++) {
+			l.compare();
 			if(l.getArray()[i] < l.getArray()[j]) {
+				l.writeToAux();
 				outArr[k] = l.getArray()[i];
 				i++;
 			}else {
+				l.writeToAux();
 				outArr[k] = l.getArray()[j];
 				j++;
 			}
 		}
 		if(j <= end) {
 			while(k <= end) {
+				l.writeToAux();
 				outArr[k] = l.getArray()[j];
 				k++;
 				j++;
 			}
 		}else if(i <= end) {
 			while(k <= end) {
+				l.writeToAux();
 				outArr[k] = l.getArray()[i];
 				k++;
 				i++;
 			}
 		}
 		for(int c = 0; c < l.size; c++) {
+			l.compare();
 			if(outArr[c] != 0) {
 				l.getArray()[c] = outArr[c];
 				wait(0);
@@ -209,7 +236,20 @@ public class Sorter {
 		}
 		return;
 	}
-
+	public void selectionSort(List l, Frame f) {
+		for(int i = 0; i < l.size; i++) {
+			int min = l.getArray()[i];
+			int minIndex = i;
+			for(int j = i; j < l.size; j++) {
+				l.compare();
+				if(l.getArray()[j] < min) {
+					min = l.getArray()[j];
+					minIndex = j;
+				}
+			}
+			swap(l, i, minIndex, f);
+		}
+	}
 	public void quickSort(List l, Frame f) {
 		internalQuickSort(l, f, 0, l.size-1);
 	}
@@ -219,6 +259,7 @@ public class Sorter {
 		}
 		int i = start;
 		for(int j = start; j <= end; j++) {
+			l.compare();
 			if(l.getArray()[j] < l.getArray()[end]) {
 				swap(l, i, j, f);
 				i++;

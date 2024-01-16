@@ -36,7 +36,7 @@ public class Control implements Frame.EventListener, Sorter.EventListener{
 			drawer.drawStrings(g, nonRec);
 			hasChanged = false;
 		}
-		drawer.drawFrame(g, list.getArray());
+		drawer.drawFrame(g, list);
 	}
 
 	@Override
@@ -85,31 +85,38 @@ public class Control implements Frame.EventListener, Sorter.EventListener{
 							frame.updateFrame();
 							break;
 						case 4:
-							list = new List(500);
+							list = new List(1000);
 							drawer.changeSize(list.getArray());
 							sort.randomize(list, frame);
 							sort.radixLSD(list, frame);
+							frame.updateFrame();
+							break;
+						case 5:
+							list = new List(1000);
+							drawer.changeSize(list.getArray());
+							sort.randomize(list, frame);
+							sort.selectionSort(list, frame);
 							frame.updateFrame();
 							break;
 					}
 				}else {
 					switch(i) {
 						case 1:
-							list = new List(500);
+							list = new List(1000);
 							drawer.changeSize(list.getArray());
 							sort.randomize(list, frame);
 							sort.radixMSD(list, frame);
 							frame.updateFrame();
 							break;
 						case 2:
-							list = new List(500);
+							list = new List(1000);
 							drawer.changeSize(list.getArray());
 							sort.randomize(list, frame);
 							sort.mergeSort(list, frame);
 							frame.updateFrame();
 							break;
 						case 3:
-							list = new List(500);
+							list = new List(1000);
 							drawer.changeSize(list.getArray());
 							sort.randomize(list, frame);
 							sort.quickSort(list, frame);

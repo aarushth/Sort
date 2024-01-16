@@ -24,7 +24,6 @@ public class Frame extends JFrame implements Panel.EventListener{
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setFocusable(true);
 		setExtendedState(JFrame.MAXIMIZED_BOTH); 
-		setUndecorated(true);
 		setVisible(true);
 		p = new Panel(this);
 
